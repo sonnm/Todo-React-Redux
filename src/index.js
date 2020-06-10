@@ -1,14 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './tailwind.generated.css';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './reducer';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+/* eslint-disable no-underscore-dangle */
+const store = createStore(
+  reducer, /* preloadedState, */
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
+/* eslint-enable */
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change
