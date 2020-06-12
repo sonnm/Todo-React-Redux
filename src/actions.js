@@ -4,17 +4,17 @@ export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const CHANGE_FILTER = 'CHANGE_FILTER';
 
 export function addItem(text) {
-  return { text, type: ADD_ITEM };
+  return { payload: { text }, type: ADD_ITEM };
 }
 
 export function toogleItem(id) {
-  return { id, type: TOOGLE_ITEM };
+  return { payload: { id }, type: TOOGLE_ITEM };
 }
 
 export function removeItem(id) {
-  return { id, type: REMOVE_ITEM };
+  return { payload: { id }, type: REMOVE_ITEM };
 }
 
 export function changeFilter(value) {
-  return { value, type: CHANGE_FILTER };
+  return { payload: { value }, type: CHANGE_FILTER };
 }
