@@ -1,23 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './tailwind.generated.css';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './reducer';
+import { PersistGate } from 'redux-persist/es/integration/react';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import configureStorage from './configureStorage';
 
-/* eslint-disable no-underscore-dangle */
-const store = createStore(
-  reducer, /* preloadedState, */
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
-/* eslint-enable */
+const { store, persistor } = configureStorage();
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
