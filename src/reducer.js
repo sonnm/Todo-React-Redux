@@ -7,38 +7,40 @@ function reducer(state = {
   filter: 'all',
   items: [{
     id: 1591749680567,
-    text: '234',
+    text: 'Todo 1',
     completed: true,
   },
   {
     id: 1591749680565,
-    text: '234 4',
+    text: 'Todo 2',
     completed: false,
   }],
 }, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case ADD_ITEM:
-      return _.assign({}, state, { // ???
-        items: _.concat(state.items, {
-          id: Date.now(),
-          text: action.text,
-          completed: false,
-        }),
-      });
+      return {
+        ...state,
+        items: [...state.items, { id: Date.now(), text: payload.text, completed: false }],
+      };
     case TOOGLE_ITEM:
-      return _.assign({}, state, {
-        items: _.map(state.items, (item) => ((item.id === action.id)
-          ? _.assign({}, item, { completed: !item.completed })
-          : item
-        )),
-      });
+      return {
+        ...state,
+        items: _.map(state.items, (item) => {
+          if (item.id === payload.id) return { ...item, completed: !item.completed };
+          return item;
+        }),
+      };
     case REMOVE_ITEM:
-      return _.assign({}, state, {
-        // items: _.remove(state.items, (item) => (item.id === action.id)),
-        items: _.filter(state.items, (item) => (item.id !== action.id)),
-      });
+      return {
+        ...state,
+        items: _.filter(state.items, (item) => (item.id !== payload.id)),
+      };
     case CHANGE_FILTER:
-      return _.assign({}, state, { filter: action.value });
+      return {
+        ...state,
+        filter: payload.value,
+      };
     default:
       return state;
   }

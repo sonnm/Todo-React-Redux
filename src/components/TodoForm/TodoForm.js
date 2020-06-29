@@ -1,8 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import _ from 'lodash';
-import { addItem } from '../actions';
 
 class TodoForm extends React.Component {
   constructor(props) {
@@ -13,12 +11,11 @@ class TodoForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const { input } = this.state;
-    const { dispatch } = this.props;
+    const { addItem } = this.props;
     if (!_.isEmpty(input)) {
-      dispatch(addItem(input));
+      addItem(input);
       this.setState({ input: '' });
     }
-    // this.props.addItem(input)
   }
 
   handleChange(e) {
@@ -46,13 +43,7 @@ class TodoForm extends React.Component {
 }
 
 TodoForm.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  addItem: PropTypes.func.isRequired,
 };
 
-// const mapDispatchToProps = (dispatch) => ({
-//   addItem: (text) => dispatch(addItem(text)),
-// });
-
-// export default connect(null, mapDispatchToProps)(TodoForm);
-
-export default connect()(TodoForm);
+export default TodoForm;
